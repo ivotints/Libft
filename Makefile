@@ -24,29 +24,33 @@ SRCSB = ft_lstnew_bonus.c ft_lstadd_front_bonus.c \
 	ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
 	ft_lstclear_bonus.c ft_lstiter_bonus.c \
 	ft_lstmap_bonus.c
-OBJS = ${SRCS:.c=.o}
-OBJSB = ${SRCSB:.c=.o}
+OBJ_DIR = obj
+OBJS = ${SRCS:%.c=$(OBJ_DIR)/%.o}
+OBJSB = ${SRCSB:%.c=$(OBJ_DIR)/%.o}
 NAME = libft.a
 LIBC = ar rcs
-CC = cc
-RM = rm -f
+RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror
-
-.c.o:
-	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
-
-${NAME}: ${OBJS}
-	${LIBC} ${NAME} ${OBJS}
 
 all: ${NAME}
 
+$(OBJ_DIR)/%.o: %.c
+	@${CC} ${CFLAGS} -c $< -o $@
+
+$(OBJ_DIR):
+	@mkdir -p $@
+
+${NAME}: $(OBJ_DIR) ${OBJS}
+	@${LIBC} ${NAME} ${OBJS}
+
 bonus: ${NAME} ${OBJSB}
-	${LIBC} ${NAME} ${OBJSB}
+	@${LIBC} ${NAME} ${OBJSB}
+
 clean:
-	${RM} ${OBJS} ${OBJSB}
+	@${RM} $(OBJ_DIR)
 
 fclean: clean
-	${RM} ${NAME} ${bonus}
+	@${RM} ${NAME} ${bonus}
 
 re: fclean all
 

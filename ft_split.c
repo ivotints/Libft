@@ -67,6 +67,8 @@ char	**ft_split(char const *str, char c)
 	int		i;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	strings = (char **)malloc(sizeof(char *) * (count_strings(str, c) + 1));
 	if (strings == NULL)
 		return (NULL);

@@ -18,6 +18,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	int		i;
 	int		j;
 
+	if (!s1 || !set)
+		return (0);
 	str = 0;
 	if (s1 != 0 && set != 0)
 	{
